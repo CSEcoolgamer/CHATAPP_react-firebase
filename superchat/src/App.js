@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import './App.css';
 
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth'; 
+import 'firebase/compat/firestore';
 
-import { useAuthState, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 firebase.initializeApp({
@@ -26,7 +27,7 @@ const firestore = firebase.firestore();
 // SIGNED OUT : user is null
 function App() {
 
-  const [user] = UseAuthState(auth);
+  const [user] = useAuthState(auth);
   return (
     <div className="App">
       <header>
@@ -41,50 +42,89 @@ function App() {
 }
 
 function SignIn() {
-  const useSignInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthPrivider();
-    auth.useSignInWithPopup(provider);                          // create a popup google authentication window
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider);                          // create a popup google authentication window
   }
 
   return (
-    <button onClick = { useSignInWithGoogle } >
-      Sign in with Google
-    </button>
+    <button onClick = { signInWithGoogle}>Sign in with Google</button>
   )
 }
 
-function SignOut(){
+function SignOut() {
   return auth.currentUser && (
 
-    <button onClick={() => auth.signOut()}>
-      Sign Out
-    </button>
+    <button onClick={() => auth.signOut()}>Sign Out</button>
   )
 }
 
 function ChatRoom() {
-
+  
+  const dummy = useRef();
   // reference a firestore collection
   const messagesRef = firestore.collection('messages');
   // query documents in a collection
-  const query = messagesRef.orderBy('createAt').limit(25);
+  const query = messagesRef.orderBy('createdAt').limit(25);
 
   // listen to data with a hook 
   const [messages] = useCollectionData(query, {idField: 'id'});
 
-  return (
-    <>
-      <div>
-        {messages && }
+  const [formValue, setFormValue] = useState('');
 
-      </div>
+  const sendMessage = async(e) => {
+    // normally when a form is submited it will refresh the page to stop that (preventDefault)
 
-      <div>
+    e.preventDefault();
 
-      </div>
+    const { uid, photoURL } = auth.currentUser;
+    
+    // create new document in firestore 
+    await messagesRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL
+    });
+
+    setFormValue('');
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
+  }
+
+
+  return ( <>
+
+      <main>
+        {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+
+        <span ref={dummy}></span>
+
+      </main>
+      
+      {/* write value to firestore */}
+      <form onSubmit={sendMessage}>
+        {/* bind state to form input */}
+        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+
+        <button type="submit" disabled={!formValue}>🕊️</button>
+
+      </form>
     </>
   )
+}
 
+function ChatMessage(props){
+  const {text , uid, photoURL} = props.message;
+
+  const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
+
+  return (
+    <div className={`message ${messageClass}`}>
+      <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
+      <p>{text}</p>
+    </div>
+  ) 
+    
 }
 
 export default App;
