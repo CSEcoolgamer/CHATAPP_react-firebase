@@ -4,6 +4,7 @@ import './App.css';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth'; 
 import 'firebase/compat/firestore';
+import 'firebase/analytics';
 
 
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -21,6 +22,7 @@ firebase.initializeApp({
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
+const analytics = firebase.analytics();
 
 
 // SIGNED IN : user is an object 
@@ -30,13 +32,16 @@ function App() {
   const [user] = useAuthState(auth);
   return (
     <div className="App">
-      <header>
 
+      <header>
+        <h1>⚛️🔥💬</h1>
+        <SignOut />
       </header>
 
       <section>
         {user ? <ChatRoom /> : <SignIn />}
       </section>
+
     </div>
   );
 }
@@ -48,14 +53,17 @@ function SignIn() {
   }
 
   return (
-    <button onClick = { signInWithGoogle}>Sign in with Google</button>
+    <>
+      <button className="sign-in" onClick = { signInWithGoogle}>Sign in with Google</button>
+      <p>Do not violate the community guidelines or you will be banned for life!</p>
+    </>
   )
 }
 
 function SignOut() {
   return auth.currentUser && (
 
-    <button onClick={() => auth.signOut()}>Sign Out</button>
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
   )
 }
 
@@ -71,6 +79,7 @@ function ChatRoom() {
   const [messages] = useCollectionData(query, {idField: 'id'});
 
   const [formValue, setFormValue] = useState('');
+
 
   const sendMessage = async(e) => {
     // normally when a form is submited it will refresh the page to stop that (preventDefault)
@@ -89,10 +98,10 @@ function ChatRoom() {
 
     setFormValue('');
     dummy.current.scrollIntoView({ behavior: 'smooth' });
+
   }
 
-
-  return ( <>
+  return (<>
 
       <main>
         {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
@@ -104,7 +113,7 @@ function ChatRoom() {
       {/* write value to firestore */}
       <form onSubmit={sendMessage}>
         {/* bind state to form input */}
-        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+        <input value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Say Something Nice" />
 
         <button type="submit" disabled={!formValue}>🕊️</button>
 
@@ -118,11 +127,12 @@ function ChatMessage(props){
 
   const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
-  return (
+  return (<>
     <div className={`message ${messageClass}`}>
       <img src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} />
       <p>{text}</p>
     </div>
+  </>
   ) 
     
 }

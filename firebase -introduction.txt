@@ -1,0 +1,177 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDTsghJv8D8gqlLUdyXFosszMXaQzYTfX0",
+  authDomain: "chatapp-using-react-firebase.firebaseapp.com",
+  projectId: "chatapp-using-react-firebase",
+  storageBucket: "chatapp-using-react-firebase.appspot.com",
+  messagingSenderId: "488449512057",
+  appId: "1:488449512057:web:928b7461c1669b10e23aa8",
+  measurementId: "G-SFXT12G9W4"
+};x
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+
+//
+
+Install Firebase CLI : To host your site with Firebase Hosting, you need the Firebase CLI (a command line tool)
+npm install -g firebase-tools
+
+
+#########################################
+// Problem in firebase login : 
+#########################################
+// Solution :
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase init functions  
+firebase : The term 'firebase' is not recognized as the name of a cmdlet, function, script file, or operable 
+program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.    
+At line:1 char:1
++ firebase init functions
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (firebase:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> npm firebase --version   
+10.1.0
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> npm install firebase@latest --save
+
+
+  run `npm fund` for details
+
+121 vulnerabilities (1 low, 97 moderate, 19 high, 4 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+Run `npm audit` for details.
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> npm firebase --version   
+10.1.0
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase init functions  
+firebase : The term 'firebase' is not recognized as the name of a cmdlet, function, script file, or operable 
+At line:1 char:1
++ firebase init functions
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (firebase:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> npm firebase init functions
+Unknown command: "firebase"
+
+To see a list of supported npm commands, run:
+  npm help
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> npm install -g firebase-t
+
+added 639 packages in 1m
+65 packages are looking for funding
+  run `npm fund` for details
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase init functions  
+firebase : File C:\Users\PC\AppData\Roaming\npm\firebase.ps1 cannot be loaded because running scripts is disabled on  
+this system. For more information, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.     
+At line:1 char:1
++ firebase init functions
++ ~~~~~~~~
+    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+## Problem - firebase : File C:\Users\PC\AppData\Roaming\npm\firebase.ps1 cannot be loaded because running scripts is disabled on  
+this system.
+#Solution : RUN the following commands in - (ADMINISTRATOR Windows PowerShell)
+{
+   $ PS C:\Windows\system32> Get-ExecutionPolicy
+    Restricted
+   $ PS C:\Windows\system32> Set-ExecutionPolicy RemoteSigned
+    Execution Policy Change
+    The execution policy helps protect you from scripts that you do not trust. Changing the execution policy might expose
+    you to the security risks described in the about_Execution_Policies help topic at
+    https:/go.microsoft.com/fwlink/?LinkID=135170. Do you want to change the execution policy?
+    [Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N")
+    : Y
+   $ PS C:\Windows\system32> Get-ExecutionPolicy
+    RemoteSigned
+
+}
+
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase init functions  
+
+Error: Failed to authenticate, have you run firebase login?
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase login
+i  Firebase optionally collects CLI and Emulator Suite usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not use
+
+? Allow Firebase to collect CLI and Emulator Suite usage and error reporting information? Yes
+i  To change your data collection preference at any time, run `firebase logout` and log in again.
+
+Visit this URL on this device to log in:
+https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=155617873&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+
+Waiting for authentication...
+
++  Success! Logged in as sachinnirate24@gmail.com
+PS C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat> firebase init functions  
+
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\PC\Desktop\DEVELOPMENT- project\REACT PROJECTS\CHATAPP_react-firebase\superchat
+
+? Are you ready to proceed? Yes
+
+=== Project Setup
+
+First, let's associate this project directory with a Firebase project.
+You can create multiple project aliases by running firebase use --add,
+but for now we'll just set up a default project.
+
+? Please select an option: Use an existing project
+? Select a default Firebase project for this directory: chatapp-using-react-firebase (CHATAPP USING REACT-FIREBASE)
+i  Using project chatapp-using-react-firebase (CHATAPP USING REACT-FIREBASE)
+
+=== Functions Setup
+Let's create a new codebase for your functions.
+A directory corresponding to the codebase will be created in your project
+with sample code pre-configured.
+
+See https://firebase.google.com/docs/functions/organize-functions for
+more information on organizing your functions using codebases.
+
+Functions can be deployed with firebase deploy.
+
+? What language would you like to use to write Cloud Functions? JavaScript  
+? Do you want to use ESLint to catch probable bugs and enforce style? Yes
++  Wrote functions/package.json
++  Wrote functions/.eslintrc.js
++  Wrote functions/index.js
++  Wrote functions/.gitignore
+? Do you want to install dependencies with npm now? Yes
+npm WARN EBADENGINE Unsupported engine { 
+npm WARN EBADENGINE   package: undefined,
+npm WARN EBADENGINE   required: { node: '18' },
+npm WARN EBADENGINE   current: { node: 'v20.5.1', npm: '10.1.0' }
+npm WARN EBADENGINE }
+
+added 587 packages, and audited 588 packages in 2m
+
+66 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+i  Writing configuration info to firebase.json...
+i  Writing project information to .firebaserc...
+
++  Firebase initialization complete!
