@@ -1,6 +1,4 @@
 const functions = require('firebase-functions');
-
-// npm install bad-words - install the bad-words in functions only(cd functions then install bad-words).
 const Filter = require('bad-words');
 const admin = require('firebase-admin');
 admin.initializeApp();
